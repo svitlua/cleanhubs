@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import * as S from "./App.styles";
 import { Filters, Hub } from "./components";
 import {
   FilterFields,
@@ -9,17 +8,20 @@ import {
   HUBS_URL,
   IFiltersType,
   IHub,
-  STAGE,
+  SHOW_ALL,
 } from "./utils";
+import * as S from "./App.styles";
+
+const initialFilters = {
+  [FilterFields.Assignable]: true,
+  [FilterFields.Stage]: SHOW_ALL,
+  [FilterFields.UnassignedQuantityTotal]: 0,
+};
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hubs, setHubs] = useState<IHub[]>([]);
-  const [filters, setFilters] = useState<IFiltersType>({
-    [FilterFields.Assignable]: true,
-    [FilterFields.Stage]: STAGE.Pilot,
-    [FilterFields.UnassignedQuantityTotal]: 0,
-  });
+  const [filters, setFilters] = useState<IFiltersType>(initialFilters);
 
   const fetchHubs = useCallback(async () => {
     try {
@@ -87,7 +89,7 @@ const App = () => {
     //@ts-ignore
     return [...new Set(countriesArr)];
   }, [hubs]);
-  
+
   return (
     <S.Container>
       {loading ? (

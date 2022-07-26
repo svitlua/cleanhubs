@@ -1,6 +1,5 @@
-import { SlowBuffer } from "buffer";
 import { useMemo } from "react";
-import { FilterFields, IFiltersType, STAGE } from "../../utils";
+import { FilterFields, IFiltersType, SHOW_ALL, STAGE } from "../../utils";
 import * as S from "./Filters.styles";
 
 interface IFiltersProps {
@@ -14,7 +13,7 @@ interface IFiltersProps {
 
 const stageOptions = [
   {
-    value: "ALL",
+    value: SHOW_ALL,
     label: "Show All",
   },
   {
@@ -36,7 +35,7 @@ export const Filters: React.FC<IFiltersProps> = ({
   const countryOptions = useMemo(() => {
     return [
       {
-        value: "ALL",
+        value: SHOW_ALL,
         label: "Show All",
       },
       ...countries.map((country) => {

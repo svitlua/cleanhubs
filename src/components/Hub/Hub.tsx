@@ -7,7 +7,7 @@ interface IHubProps {
   data: IHub;
 }
 
-const HUB_SITE = "https://test.cleanhub.com/hub"
+const HUB_SITE = "https://test.cleanhub.com/hub";
 
 export const Hub: React.FC<IHubProps> = ({ data }) => {
   const {
@@ -19,12 +19,14 @@ export const Hub: React.FC<IHubProps> = ({ data }) => {
     unassignedQuantityTotal,
     recoveredQuantityUnit,
     slug,
+    parentHubName,
   } = data;
-
 
   return (
     <S.Wrapper
-      onClick={() => window.open(`${HUB_SITE}/${slug}`, "_blank", "noopener,noreferrer")}
+      onClick={() =>
+        window.open(`${HUB_SITE}/${slug}`, "_blank", "noopener,noreferrer")
+      }
     >
       <S.Logo src={`${logo?.directLink}`} alt={`${displayName} logo`} />
       <S.Divider />
@@ -39,6 +41,12 @@ export const Hub: React.FC<IHubProps> = ({ data }) => {
         <>
           <S.Title>Location</S.Title>
           <S.InfoText>{location}</S.InfoText>
+        </>
+      )}
+      {parentHubName && (
+        <>
+          <S.Title>Parent Hub</S.Title>
+          <S.InfoText>{parentHubName}</S.InfoText>
         </>
       )}
       <S.InfoText>{cardDescription}</S.InfoText>

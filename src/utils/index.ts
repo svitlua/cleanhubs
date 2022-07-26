@@ -13,6 +13,7 @@ export interface IHub {
   recoveredQuantityUnit: string;
   slug: string;
   stage: STAGE;
+  parentHubName: string | null;
 }
 
 export enum STAGE {
@@ -42,13 +43,14 @@ export const FilterMatchTypeMap = {
   [FilterFields.Location]: FilterMatchType.Partial,
 };
 
-
 export interface IFiltersType {
-    [FilterFields.Assignable]: boolean;
-    [FilterFields.DisplayName]?: string;
-    [FilterFields.Location]?: string;
-    [FilterFields.Stage]?: string;
-    [FilterFields.UnassignedQuantityTotal]?: string | number;
+  [FilterFields.Assignable]: boolean;
+  [FilterFields.DisplayName]?: string;
+  [FilterFields.Location]?: string;
+  [FilterFields.Stage]?: string;
+  [FilterFields.UnassignedQuantityTotal]?: string | number;
 }
-  
+
 export const HUBS_URL = "https://marketplace-demo.cleanhub.com/api/public/hubs";
+
+export const SHOW_ALL = "ALL";

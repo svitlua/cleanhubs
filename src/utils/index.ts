@@ -42,4 +42,13 @@ export const FilterMatchTypeMap = {
   [FilterFields.Location]: FilterMatchType.Partial,
 };
 
+
+export interface IFiltersType {
+    [FilterFields.Assignable]: boolean;
+    [FilterFields.DisplayName]?: string;
+    [FilterFields.Location]?: string;
+    [FilterFields.Stage]?: string;
+    [FilterFields.UnassignedQuantityTotal]?: string | number;
+}
+  
 export const HUBS_URL = "https://marketplace-demo.cleanhub.com/api/public/hubs";

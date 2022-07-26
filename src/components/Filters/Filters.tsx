@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
-import { FilterFields, STAGE } from "../../utils";
+import { SlowBuffer } from "buffer";
+import { useMemo } from "react";
+import { FilterFields, IFiltersType, STAGE } from "../../utils";
+import * as S from "./Filters.styles";
 
 interface IFiltersProps {
   onChange: (
@@ -7,11 +9,12 @@ interface IFiltersProps {
   ) => void;
   maxUnassignedAmount: number;
   countries: string[];
+  filters: IFiltersType;
 }
 
 const stageOptions = [
   {
-    value: "",
+    value: "ALL",
     label: "Show All",
   },
   {
@@ -28,13 +31,12 @@ export const Filters: React.FC<IFiltersProps> = ({
   onChange,
   maxUnassignedAmount,
   countries,
+  filters,
 }) => {
-  const [rangeValue, setRangeValue] = useState<string | number>(0);
-
   const countryOptions = useMemo(() => {
     return [
       {
-        value: "",
+        value: "ALL",
         label: "Show All",
       },
       ...countries.map((country) => {
@@ -44,56 +46,60 @@ export const Filters: React.FC<IFiltersProps> = ({
   }, [countries]);
 
   return (
-    <div>
+    <S.Container>
       <div>
-        <label>Stage</label>
-        <select onChange={onChange} name={FilterFields.Stage}>
-          {stageOptions.map(({ value, label }, index) => (
-            <option value={value} key={index}>
-              {label}
-            </option>
-          ))}
-        </select>
+        <input
+          type="checkbox"
+          id="checkbox-filter"
+          name={FilterFields.Assignable}
+          checked={filters[FilterFields.Assignable]}
+          onChange={onChange}
+        />
+        <S.Label htmlFor="checkbox-filter">Assignable</S.Label>
       </div>
-      <input
+      <S.Input
         type="text"
         name={FilterFields.DisplayName}
         onChange={onChange}
         placeholder="Search by name"
       />
       <div>
-        <input
-          type="checkbox"
-          id="checkbox-filter"
-          name={FilterFields.Assignable}
+        <S.Label>Stage</S.Label>
+        <S.Select
           onChange={onChange}
-        />
-        <label htmlFor="checkbox-filter">Assignable</label>
+          name={FilterFields.Stage}
+          placeholder="Select Stage"
+          value={filters[FilterFields.Stage]}
+        >
+          {stageOptions.map(({ value, label }, index) => (
+            <option value={value} key={index}>
+              {label}
+            </option>
+          ))}
+        </S.Select>
       </div>
+
       <div>
-        <input
+        <S.Label>Unassigned Quantity: {filters[FilterFields.UnassignedQuantityTotal]} kg</S.Label>
+        <S.RangeInput
           name={FilterFields.UnassignedQuantityTotal}
           type="range"
           min="0"
           max={maxUnassignedAmount}
-          value={rangeValue}
-          onChange={(event) => {
-            onChange(event);
-            setRangeValue(event.target.value);
-          }}
+          value={filters[FilterFields.UnassignedQuantityTotal]}
+          onChange={onChange}
         />
-        {rangeValue}kg
       </div>
       <div>
-        <label>Country</label>
-        <select onChange={onChange} name={FilterFields.Location}>
+        <S.Label>Country</S.Label>
+        <S.Select onChange={onChange} name={FilterFields.Location}>
           {countryOptions.map(({ value, label }, index) => (
             <option value={value} key={index}>
               {label}
             </option>
           ))}
-        </select>
+        </S.Select>
       </div>
-    </div>
+    </S.Container>
   );
 };

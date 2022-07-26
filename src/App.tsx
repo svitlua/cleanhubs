@@ -7,21 +7,19 @@ import {
   FilterMatchType,
   FilterMatchTypeMap,
   HUBS_URL,
+  IFiltersType,
   IHub,
+  STAGE,
 } from "./utils";
-
-interface IFiltersType {
-  [FilterFields.Assignable]?: boolean;
-  [FilterFields.DisplayName]?: string;
-  [FilterFields.Stage]?: string;
-  [FilterFields.UnassignedQuantityTotal]?: string | number;
-  [FilterFields.Location]?: string;
-}
 
 const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hubs, setHubs] = useState<IHub[]>([]);
-  const [filters, setFilters] = useState<IFiltersType>({[FilterFields.Assignable]: true});
+  const [filters, setFilters] = useState<IFiltersType>({
+    [FilterFields.Assignable]: true,
+    [FilterFields.Stage]: STAGE.Pilot,
+    [FilterFields.UnassignedQuantityTotal]: 0,
+  });
 
   const fetchHubs = useCallback(async () => {
     try {
@@ -61,11 +59,11 @@ const App = () => {
         if (filterMatchType === FilterMatchType.Exact) {
           return hub[key] === filters[key];
         } else if (filterMatchType === FilterMatchType.Partial) {
-          return hub[key]
-            ? (hub[key] as string)
+          return filters[key] === "ALL"
+            ? true
+            : (hub[key] as string)
                 ?.toLowerCase()
-                .includes((filters[key] as string).toLowerCase())
-            : true;
+                .includes((filters[key] as string).toLowerCase());
         } else if (filterMatchType === FilterMatchType.Range) {
           return hub[key] >= parseInt(filters[key] as string);
         }
@@ -89,9 +87,7 @@ const App = () => {
     //@ts-ignore
     return [...new Set(countriesArr)];
   }, [hubs]);
-
-  console.log(countries);
-
+  
   return (
     <S.Container>
       {loading ? (
@@ -103,6 +99,7 @@ const App = () => {
             onChange={handleChange}
             maxUnassignedAmount={maxUnassignedAmount}
             countries={countries}
+            filters={filters}
           />
           <S.HubsWrapper>
             {filteredHubs.map((hub, index) => (

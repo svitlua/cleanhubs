@@ -1,29 +1,13 @@
 import React from "react";
+import { IHub } from "../../utils";
 import * as S from "./Hub.styles";
 import { ProgressBar } from "./ProgressBar";
-
-interface IHub {
-  uuid: string;
-  displayName: string;
-  cardDescription: string;
-  cardImage: {
-    directLink: string;
-    thumbnailDirectLink: string;
-  };
-  location: string;
-  logo: {
-    directLink: string;
-    thumbnailDirectLink: string;
-  };
-  recoveredQuantity: number;
-  totalRecoveredQuantity: number;
-  unassignedQuantityTotal: number;
-  recoveredQuantityUnit: string;
-}
 
 interface IHubProps {
   data: IHub;
 }
+
+const HUB_SITE = "https://test.cleanhub.com/hub"
 
 export const Hub: React.FC<IHubProps> = ({ data }) => {
   const {
@@ -34,10 +18,14 @@ export const Hub: React.FC<IHubProps> = ({ data }) => {
     totalRecoveredQuantity,
     unassignedQuantityTotal,
     recoveredQuantityUnit,
+    slug,
   } = data;
-  console.log(data);
+
+
   return (
-    <S.Wrapper>
+    <S.Wrapper
+      onClick={() => window.open(`${HUB_SITE}/${slug}`, "_blank", "noopener,noreferrer")}
+    >
       <S.Logo src={`${logo?.directLink}`} alt={`${displayName} logo`} />
       <S.Divider />
       <S.Title>Partner</S.Title>

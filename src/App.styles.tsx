@@ -22,10 +22,15 @@ export const Loader = styled.div`
 `;
 
 export const HubsWrapper = styled.div`
+  //   display: flex;
+  //   column-gap: 24px;
+  //   row-gap: 24px;
+  //   flex-wrap: wrap;
+  //   justify-content: space-between;
   display: grid;
   grid-column-gap: 24px;
   grid-row-gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 `;
 
 export const Container = styled.div`

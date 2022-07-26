@@ -18,7 +18,6 @@ const calculateAchievedPercentage: (
   remains: number
 ) => number = (achieved, remains) => {
   const result = Math.floor((achieved * 100) / (achieved + remains)) ?? 0;
-  debugger;
   return result;
 };
 
@@ -27,7 +26,7 @@ export const ProgressBar: React.FC<IProgressBarProps> = ({
   unassignedQuantityTotal,
   recoveredQuantityUnit,
 }) => {
-  return !!totalRecoveredQuantity ? (
+  return totalRecoveredQuantity ? (
     <S.BarContainer>
       <S.BarAchieved
         percents={calculateAchievedPercentage(
@@ -37,9 +36,8 @@ export const ProgressBar: React.FC<IProgressBarProps> = ({
       >
         {formatQuantityWithUnit(totalRecoveredQuantity, recoveredQuantityUnit)}
       </S.BarAchieved>
-      {!!unassignedQuantityTotal && (
+      {unassignedQuantityTotal && (
         <S.BarRemains>
-          {" "}
           {formatQuantityWithUnit(
             unassignedQuantityTotal,
             recoveredQuantityUnit

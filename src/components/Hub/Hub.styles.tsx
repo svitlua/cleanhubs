@@ -4,15 +4,18 @@ const primaryColor = "#1981ff";
 const textColor = "rgba(0, 0, 0, 0.87)";
 
 export const Wrapper = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-flow: column;
   padding: 0 24px;
-  min-width: 300px;
+  min-width: 400px;
+  max-width: 500px;
   box-sizing: border-box;
   display: flex;
   border-radius: 8px;
   box-shadow: 0 -1px 4px 0 rgba(25, 32, 36, 0.04),
     0 3px 6px 0 rgba(25, 32, 36, 0.16);
+  cursor: pointer;
 `;
 
 export const Title = styled.div`
